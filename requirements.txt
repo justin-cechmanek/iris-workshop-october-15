@@ -1,0 +1,6 @@
+redis>=6.3,<9,!=8.0.0
+redisvl[langcache,sentence-transformers]>=0.27,<0.28
+python-dotenv>=1,<2
+redis-context-retriever
+redis-agent-memory
+python-pptx>=1,<2

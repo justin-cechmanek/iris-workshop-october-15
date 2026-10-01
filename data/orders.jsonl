@@ -1,0 +1,3 @@
+{"order_id":"O1001","store_id":"S101","status":"ready_for_pickup","item_summary":"sunscreen and shampoo","customer_id":"demo-user-1"}
+{"order_id":"O1002","store_id":"S102","status":"shipped","item_summary":"vitamins","customer_id":"demo-user-2"}
+{"order_id":"O1003","store_id":"S101","status":"processing","item_summary":"toothpaste","customer_id":"demo-user-1"}
