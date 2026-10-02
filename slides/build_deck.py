@@ -179,7 +179,7 @@ s = new_slide(deck, "Lab 2: generated order tool", 10,
               "Source: https://redis.io/tutorials/getting-started-with-redis-iris/ . "
               "Workshop guide: exercises/lab_2/README.md")
 label(s, "Edit exercises/lab_2/02_context.py")
-body(s, "List tools with the agent key.\n\n"
+body(s, "Print every generated tool with the agent key.\n\n"
         "Inspect get_order_by_id and its input schema.\n\n"
         "Call it with id = O1001.\n\n"
         "Change the sample order, reload, and call again.", x=0.65, y=1.8, w=7.8, h=4.9, size=22)

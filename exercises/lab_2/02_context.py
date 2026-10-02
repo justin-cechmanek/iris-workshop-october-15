@@ -13,9 +13,9 @@ from dotenv import load_dotenv
 async def main():
     load_dotenv()
     async with UnifiedClient() as client:
-        # TODO 1: list_tools(os.environ["CTX_AGENT_KEY"]) and print each
-        # tool's name, description, and inputSchema. A tool may be a dict
-        # or an SDK model (use model_dump() in that case).
+        # TODO 1: list_tools(os.environ["CTX_AGENT_KEY"]) and print every
+        # full tool definition. A tool may be a dict or an SDK model (use
+        # model_dump(by_alias=True) in that case).
         # TODO 2: choose the generated get-by-ID tool for Order. Copy its
         # exact name and argument schema from the printed list.
         # TODO 3: query_tool(agent_key=..., tool_name=..., arguments=...)

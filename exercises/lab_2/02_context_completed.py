@@ -17,16 +17,16 @@ async def main():
     agent_key = os.environ["CTX_AGENT_KEY"]
 
     async with UnifiedClient() as client:
-        # The surface generated these tools from models_completed.py. Inspect
-        # the schema before using one so argument names are never guessed.
+        # The surface generated these tools from models_completed.py. Print
+        # every complete definition, including fields beyond inputSchema.
         tools = await client.list_tools(agent_key)
         tool_details = [
             tool if isinstance(tool, dict) else tool.model_dump(by_alias=True)
             for tool in tools
         ]
+        print(f"Generated tools ({len(tool_details)}):")
         for details in tool_details:
-            print(details["name"], details.get("description", ""))
-            print(json.dumps(details.get("inputSchema", {}), indent=2))
+            print(json.dumps(details, indent=2))
 
         tool_name = "get_order_by_id"
         names = {details["name"] for details in tool_details}

@@ -42,13 +42,13 @@ ctxctl tools list --agent-key "$CTX_AGENT_KEY"
 
 Check that `surface describe` names your two entities before creating the agent key. The admin key manages surfaces; the agent key calls generated tools. Copy `CTX_AGENT_KEY` into `.env` for Python. If Redis requires TLS or a non-default user, check `ctxctl surface create --help` for the matching flags. Keep keys out of source control.
 
-Edit [`02_context.py`](02_context.py). Call `UnifiedClient.list_tools(agent_key)` and print names plus `inputSchema`. Find `get_order_by_id`, then call `UnifiedClient.query_tool(agent_key=..., tool_name="get_order_by_id", arguments={"id": "O1001"})`. Print the result. The generated tool schema, not the Redis key pattern, tells you the API argument name.
+Edit [`02_context.py`](02_context.py). Call `UnifiedClient.list_tools(agent_key)` and print **every complete tool definition** as indented JSON. The list shows what Context Retriever generated from both entities and their indexed fields. Find `get_order_by_id` and inspect its `inputSchema`, then call `UnifiedClient.query_tool(agent_key=..., tool_name="get_order_by_id", arguments={"id": "O1001"})`. Print the result. The generated tool schema, not the Redis key pattern, tells you the API argument name.
 
 ```sh
 python exercises/lab_2/02_context.py
 ```
 
-Expect a result for `O1001` with status `ready_for_pickup`. To see live context, change that fictional order's `status` in `data/orders.jsonl`, rerun the loader, call the tool again, then restore the sample data.
+Expect a full list of generated tools followed by a result for `O1001` with status `ready_for_pickup`. Compare the listed get, search, and filter tools with the fields you indexed in `models.py`. To see live context, change that fictional order's `status` in `data/orders.jsonl`, rerun the loader, call the tool again, then restore the sample data.
 
 For the completed path, run [`02_load_context_completed.py`](02_load_context_completed.py), create the surface with `--models exercises/lab_2/models_completed.py`, then run [`02_context_completed.py`](02_context_completed.py). Creating a surface from the unfinished starter model will not expose all completed fields.
 
