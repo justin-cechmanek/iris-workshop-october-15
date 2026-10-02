@@ -198,10 +198,13 @@ s = new_slide(deck, "Lab 3: LangCache", 11,
 label(s, "Create service in Redis Cloud")
 body(s, "Open LangCache and create a service on the workshop database.\n\n"
         "Copy the API key once. Get the base URL and cache ID from Connectivity.\n\n"
-        "Use RedisVL's adapter to check, store on a miss, then check a rephrasing.",
+        "Store one answer, then check the same rephrasing at three distance thresholds.",
         x=0.65, y=1.8, w=8.0, h=4.85, size=21)
-code(s, "hits = cache.check(prompt=first,\n  distance_threshold=0.1)\n"
-        "if not hits:\n  cache.store(prompt=first,\n    response=answer)", 8.65, 2.16, 4.05, 3.0, 16)
+code(s, "for limit in (0.02, 0.10, 0.40):\n"
+        "  hits = cache.check(\n"
+        "    prompt=similar,\n"
+        "    distance_threshold=limit)\n"
+        "  print(limit, bool(hits))", 8.3, 2.16, 4.4, 3.0, 15)
 
 # 12. Lab 4
 s = new_slide(deck, "Lab 4: Agent Memory", 12,

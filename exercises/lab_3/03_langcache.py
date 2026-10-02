@@ -23,9 +23,12 @@ def main():
     # RedisVL returns a list of hit dictionaries; an empty list is a miss.
     # TODO 2: On a miss, use the fictional pickup policy to write an answer.
     # Store first + answer with cache.store(prompt=..., response=...).
-    # TODO 3: Check the exact and similar prompts; print and compare hit lists.
-    # Answers may vary for semantic matches. Never cache personalized details
-    # under an unscoped prompt.
+    # TODO 3: Check first again at distance_threshold=0.02 to confirm the
+    # stored prompt can be found. Print the hit list.
+    # TODO 4: Check similar at thresholds 0.02, 0.10, and 0.40. For each,
+    # print the threshold, HIT or MISS, and the returned hit list. Do not
+    # store similar between checks, or an exact hit will mask the comparison.
+    # Never cache personalized details under an unscoped prompt.
     raise NotImplementedError("Try LangCache search and set")
 
 

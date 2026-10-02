@@ -53,9 +53,11 @@ class CompletedExamplesTest(unittest.TestCase):
                 pass
 
             def check(self, prompt, distance_threshold):
-                assert distance_threshold == 0.1
                 if self.answer and prompt == "How long does the demo store hold my pickup order?":
                     return [{"response": self.answer}]
+                if self.answer and prompt == "For how many days can I collect a pickup order?":
+                    if distance_threshold >= 0.40:
+                        return [{"response": self.answer}]
                 return []
 
             def store(self, prompt, response):
@@ -77,6 +79,8 @@ class CompletedExamplesTest(unittest.TestCase):
             main()
         self.assertIn("Stored entry: demo-entry", output.getvalue())
         self.assertIn("seven days", output.getvalue())
+        self.assertIn("minimum similarity 0.98): MISS", output.getvalue())
+        self.assertIn("minimum similarity 0.60): HIT", output.getvalue())
 
 
 if __name__ == "__main__":

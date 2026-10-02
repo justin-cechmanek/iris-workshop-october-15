@@ -34,12 +34,22 @@ def main():
         entry_id = cache.store(prompt=first, response=answer)
         print("Stored entry:", entry_id)
 
-    # Repeating the original prompt should hit. The rephrased prompt may
-    # miss at a strict threshold; inspect both raw hit lists.
-    exact_hits = cache.check(prompt=first, distance_threshold=0.1)
-    related_hits = cache.check(prompt=similar, distance_threshold=0.1)
-    print("Exact prompt:", exact_hits)
-    print("Related prompt:", related_hits)
+    # An exact repeat should hit even at a strict threshold. Check it before
+    # testing a rephrasing so we know the stored entry is available.
+    exact_hits = cache.check(prompt=first, distance_threshold=0.02)
+    print("Exact prompt at distance 0.02:", exact_hits)
+
+    # Higher normalized distance allows less similar prompts. Keep the
+    # rephrased prompt unchanged and do not store it between checks.
+    for threshold in (0.02, 0.10, 0.40):
+        related_hits = cache.check(prompt=similar, distance_threshold=threshold)
+        status = "HIT" if related_hits else "MISS"
+        minimum_similarity = 1.0 - threshold
+        print(
+            f"Rephrased prompt at distance {threshold:.2f} "
+            f"(minimum similarity {minimum_similarity:.2f}): {status}"
+        )
+        print("Hits:", related_hits)
 
 
 if __name__ == "__main__":
