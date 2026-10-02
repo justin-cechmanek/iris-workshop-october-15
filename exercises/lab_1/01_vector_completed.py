@@ -53,7 +53,8 @@ def main():
     print("Index ready:", INDEX)
 
     records = []
-    for path in sorted(Path("data/policies").glob("*.md")):
+    policy_dir = Path(__file__).resolve().parents[2] / "data/policies"
+    for path in sorted(policy_dir.glob("*.md")):
         heading, separator, body = path.read_text(encoding="utf-8").partition("\n\n")
         if not separator or not body.strip():
             raise ValueError(f"Expected a heading and body in {path}")
@@ -71,7 +72,7 @@ def main():
         })
 
     # The id field becomes the last part of each Redis key. Re-running
-    # updates the same three HASHes rather than creating duplicates.
+    # updates the same eight HASHes rather than creating duplicates.
     keys = index.load(records, id_field="id")
     for key in keys:
         print("Loaded:", key)

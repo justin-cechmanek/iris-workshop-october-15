@@ -143,7 +143,7 @@ s = new_slide(deck, "Lab 1: vector search", 7,
               "https://docs.redisvl.com/en/latest/api/searchindex.html . "
               "Workshop guide: exercises/lab_1/README.md")
 label(s, "Edit exercises/lab_1/01_vector.py")
-body(s, "Read each policy Markdown file.\n\n"
+body(s, "Read eight policy Markdown files.\n\n"
         "Embed its body locally with all-MiniLM-L6-v2.\n\n"
         "Create a RedisVL HASH index and load records.\n\n"
         "Inspect the 1,536-byte vector; query top 2.", x=0.65, y=1.8, w=7.25, h=4.95, size=22)

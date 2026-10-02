@@ -33,7 +33,8 @@ def main():
     raise NotImplementedError("Create the RedisVL vector index")
 
     records = []
-    for path in sorted(Path("data/policies").glob("*.md")):
+    policy_dir = Path(__file__).resolve().parents[2] / "data/policies"
+    for path in sorted(policy_dir.glob("*.md")):
         text = path.read_text(encoding="utf-8")
         # TODO 3: Split text at its first blank line. Use the heading as
         # title, the remaining paragraphs as body, and path.stem as id.
