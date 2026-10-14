@@ -13,9 +13,9 @@ All sample policies, stores, orders, and users are fictional. Use no real custom
 | --- | ---: | --- |
 | Cloud account, database, Python setup | 20 | Redis `PING` returns `True` |
 | Lab 1: Vector search | 30 | Pickup policy ranks near the top |
-| Lab 2: Context Retriever | 45 | `get_order_by_id` returns `O1001` |
-| Lab 3: LangCache | 20 | Exact prompt returns a cached entry |
-| Lab 4: Agent Memory | 25 | Session event appears; search runs |
+| Lab 2: LangCache | 20 | Exact prompt returns a cached entry |
+| Lab 3: Agent Memory | 25 | Session event appears; search runs |
+| Lab 4: Context Retriever | 45 | `get_order_by_id` returns `O1001` |
 | Debrief | 10 | Explain when to use each service |
 
 Instructors: complete the [preflight checklist](INSTRUCTOR.md) before the session, especially service access and attendee credentials. Account verification or provisioning can take longer than the schedule allows.
@@ -46,7 +46,7 @@ print(vectorizer.dims)
 PY
 ```
 
-Expect `384`. Fill `REDIS_URL` in `.env`. Use `redis://default:PASSWORD@HOST:PORT` for a non-TLS database or `rediss://` when TLS is enabled. URL-encode reserved characters in the password. Before lab 4, replace `WORKSHOP_USER_ID=change-me` with a unique non-sensitive ID. The `.env` file is ignored by Git; keep service keys there. No OpenAI key is needed for the workshop's Python scripts.
+Expect `384`. Fill `REDIS_URL` in `.env`. Use `redis://default:PASSWORD@HOST:PORT` for a non-TLS database or `rediss://` when TLS is enabled. URL-encode reserved characters in the password. Before lab 3, replace `WORKSHOP_USER_ID=change-me` with a unique non-sensitive ID. The `.env` file is ignored by Git; keep service keys there. No OpenAI key is needed for the workshop's Python scripts.
 
 Check the database connection:
 
@@ -56,7 +56,7 @@ import os
 from dotenv import load_dotenv
 from redisvl.redis.connection import RedisConnectionFactory
 
-load_dotenv()
+load_dotenv(override=True)
 client = RedisConnectionFactory.get_redis_connection(
     redis_url=os.environ["REDIS_URL"]
 )
@@ -73,22 +73,22 @@ Work from the repository root, with `.venv` active, in this order:
 | Lab | Guide | Main exercise |
 | --- | --- | --- |
 | 1. Vector search | [Lab 1 instructions](exercises/lab_1_vector_search/README.md) | Parse, embed, index, and search policy documents |
-| 2. Context Retriever | [Lab 2 instructions](exercises/lab_2_context_retriever/README.md) | Load orders and stores, model entities, call a generated tool |
-| 3. LangCache | [Lab 3 instructions](exercises/lab_3_langcache/README.md) | Search, store, and compare policy answers |
-| 4. Agent Memory | [Lab 4 instructions](exercises/lab_4_agent_memory/README.md) | Write a session event and search extracted memory |
+| 2. LangCache | [Lab 2 instructions](exercises/lab_2_langcache/README.md) | Search, store, and compare policy answers |
+| 3. Agent Memory | [Lab 3 instructions](exercises/lab_3_agent_memory/README.md) | Write a session event and search extracted memory |
+| 4. Context Retriever | [Lab 4 instructions](exercises/lab_4_context_retriever/README.md) | Model entities, load orders and stores, call a generated tool |
 
-Each starter has a commented `*_completed.py` answer beside it. Try the starter first, then compare. Lab 2 also has `models_completed.py`; create the surface with that model when trying the completed path.
+Each starter has a commented `*_completed.py` answer beside it. Try the starter first, then compare. Lab 4 keeps its models, loader, surface configuration, and tool calls in one file; after creating an initial entity in the Cloud UI, both versions configure the complete workshop model through Python.
 
-RedisVL defines, loads, and queries the vector index in lab 1, supplies the Redis connection for lab 2's raw HASH writes, and wraps the managed LangCache service in lab 3. Context Retriever models those HASHes as a separate service; lab 4 uses the Agent Memory SDK.
+RedisVL defines, loads, and queries the vector index in lab 1, supplies the Redis connection for lab 4's raw HASH writes, and wraps the managed LangCache service in lab 2. Context Retriever models those HASHes as a separate service; lab 3 uses the Agent Memory SDK.
 
 For every lab, trace one piece of data through the system before opening the completed file:
 
 | Lab | File you edit | Data to inspect after it runs |
 | --- | --- | --- |
 | 1 | `01_vector.py` | Policy HASH, vector byte length, and ranked text |
-| 2 | `02_load_context.py`, `models.py`, `02_context.py` | Raw order HASH and generated tool result |
-| 3 | `03_langcache.py` | Cache miss, stored public answer, and repeated search |
-| 4 | `04_memory.py` | Health response, session event, and later extracted memory |
+| 2 | `o2_langcache.py` | Cache miss, stored public answer, and repeated search |
+| 3 | `03_agent_memory.py` | Health response, session event, and later extracted memory |
+| 4 | `04_context.py` | Raw order HASH and generated tool result |
 
 At the end of each lab, write down one prediction, what you observed, and why the result follows from the data or service configuration. The final debrief uses those notes.
 
