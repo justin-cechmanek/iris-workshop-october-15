@@ -20,7 +20,7 @@ PREFIX = "workshop:policy:minilm"
 
 
 def main():
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env", override=True)
 
     index = SearchIndex.from_dict(
         {

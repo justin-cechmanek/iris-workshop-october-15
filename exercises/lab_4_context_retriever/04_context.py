@@ -94,7 +94,7 @@ async def query_context(agent_key):
 
 
 async def main():
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env", override=True)
     for name in ("REDIS_URL", "CTX_ADMIN_KEY", "CTX_SURFACE_ID"):
         if not os.environ.get(name):
             raise ValueError(f"Set {name} in .env before running lab 4")

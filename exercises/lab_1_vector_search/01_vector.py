@@ -20,7 +20,7 @@ PREFIX = "workshop:policy:minilm"
 
 
 def main():
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env", override=True)
 
     # TODO 1: Build an HFTextVectorizer with MODEL. Check its dims against DIM.
     # The model runs locally after Hugging Face downloads it once.

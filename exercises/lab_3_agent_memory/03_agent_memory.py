@@ -7,13 +7,14 @@ Then: python exercises/lab_3_agent_memory/03_agent_memory.py read
 import os
 import sys
 from datetime import datetime, timezone
+from pathlib import Path
 
 from dotenv import load_dotenv
 from redis_agent_memory import AgentMemory, models
 
 
 def main():
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env", override=True)
     user_id = os.environ.get("WORKSHOP_USER_ID", "").strip()
     if not user_id or user_id == "change-me":
         raise SystemExit("Set a unique WORKSHOP_USER_ID in .env")

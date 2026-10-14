@@ -12,8 +12,6 @@ In Redis Cloud, open **LangCache** and create a service on the workshop database
 
 RedisVL's `LangCacheSemanticCache` wraps the managed LangCache API; it does not create a second Redis index.
 
-**Predict before coding:** Will two questions with different wording always return the same cached answer? At which of `0.02`, `0.10`, and `0.40` is a rephrased question most likely to hit?
-
 ## Exercise
 
 Edit [`o2_langcache.py`](o2_langcache.py). Complete the TODOs in order:

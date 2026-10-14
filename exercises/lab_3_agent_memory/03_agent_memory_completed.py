@@ -7,13 +7,14 @@ Long-term extraction is asynchronous and may need another read later.
 import os
 import sys
 from datetime import datetime, timezone
+from pathlib import Path
 
 from dotenv import load_dotenv
 from redis_agent_memory import AgentMemory, models
 
 
 def main():
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env", override=True)
     # A shared instructor service needs separate owner and session IDs for
     # each attendee. Keep the chosen ID stable between write and read runs.
     user_id = os.environ.get("WORKSHOP_USER_ID", "").strip()

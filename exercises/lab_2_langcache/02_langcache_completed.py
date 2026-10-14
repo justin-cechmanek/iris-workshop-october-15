@@ -5,13 +5,15 @@ Only fictional, non-personalized policy text is stored.
 """
 
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 from redisvl.extensions.cache.llm import LangCacheSemanticCache
 
 
 def main():
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env", override=True)
+
     first = "How long does the demo store hold my pickup order?"
     similar = "For how many days can I collect a pickup order?"
 
@@ -20,10 +22,11 @@ def main():
         cache_id=os.environ["LANGCACHE_CACHE_ID"],
         api_key=os.environ["LANGCACHE_API_KEY"],
     )
+
     # RedisVL returns a list of hit dictionaries. A 0.1 normalized distance
     # threshold is strict: smaller distance means a closer semantic match.
     found = cache.check(prompt=first, distance_threshold=0.1)
-    print("Before store:", found)
+    print("Before storing in cache:", found)
     if not found:
         # This is the fictional answer in data/policies/pickup.md. A real
         # app would generate an answer on the miss, then store that answer.
