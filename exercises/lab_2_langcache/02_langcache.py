@@ -1,6 +1,6 @@
-"""Lab 3: use RedisVL to check, store, and recheck a public policy answer.
+"""Lab 2: use RedisVL to check, store, and recheck a public policy answer.
 
-Run from repository root: python exercises/lab_3_langcache/03_langcache.py
+Run from repository root: python exercises/lab_2_langcache/o2_langcache.py
 Only fictional, non-personalized policy text is stored.
 """
 

@@ -1,4 +1,4 @@
-"""Completed lab 2: model, load, and retrieve live orders in one file.
+"""Completed lab 4: model, load, and retrieve live orders in one file.
 
 First finish Cloud UI setup with at least one saved entity (see README.md).
 Use Store, key template workshop:store:{store_id}, and store_id as its PK.
@@ -6,7 +6,7 @@ Save REDIS_URL, CTX_ADMIN_KEY, and the created service's CTX_SURFACE_ID
 in .env. This script loads data, replaces the initial UI entity model with
 Store and Order, creates an agent key, and retrieves an order.
 Then run once from the repository root:
-    python exercises/lab_2_context_retriever/02_context_completed.py
+    python exercises/lab_4_context_retriever/04_context_completed.py
 """
 
 import asyncio
@@ -137,7 +137,7 @@ async def main():
     load_dotenv()
     for name in ("REDIS_URL", "CTX_ADMIN_KEY", "CTX_SURFACE_ID"):
         if not os.environ.get(name):
-            raise ValueError(f"Set {name} in .env before running lab 2")
+            raise ValueError(f"Set {name} in .env before running lab 4")
     load_context()
     agent_key = await configure_context()
     await query_context(agent_key)

@@ -1,4 +1,4 @@
-# Lab 2: Context Retriever over live orders
+# Lab 4: Context Retriever over live orders
 
 **Goal:** turn structured Redis Hashes into a governed get-by-ID tool. Allow about 45 minutes. Read [`stores.jsonl`](../../data/stores.jsonl) and [`orders.jsonl`](../../data/orders.jsonl) first. Each line is one fictional record.
 
@@ -10,7 +10,7 @@ The loader gets a Redis connection through RedisVL and writes current data as ra
 
 ## Exercise
 
-Edit [`02_context.py`](02_context.py), working from top to bottom: model the entities, write the loader, configure the existing surface, then write the tool calls. Complete TODOs 1–10 and the Cloud UI setup below before running Python. Run the file once to load and inspect the data, upload the models, create an agent key, and call the tools.
+Edit [`04_context.py`](04_context.py), working from top to bottom: model the entities, write the loader, configure the existing surface, then write the tool calls. Complete TODOs 1–10 and the Cloud UI setup below before running Python. Run the file once to load and inspect the data, upload the models, create an agent key, and call the tools.
 
 1. **Model the entities (TODOs 1–2).** In Step 1, add `ContextField` declarations for every remaining field in both JSONL files. Use `index="text"` for words to search and `index="tag"` for exact values such as status and IDs. Mark each entity's own ID `is_key_component=True`.
 
@@ -57,7 +57,7 @@ CTX_SURFACE_ID=YOUR_EXISTING_SURFACE_ID
 Keep keys out of source control. Use a dedicated workshop surface: the script replaces the initial UI entity model with Store and Order while keeping its existing database connection. After the one-time UI setup, Python handles model configuration and agent-key creation; no command-line setup or `CTX_AGENT_KEY` is needed. After completing all TODOs, run from the repository root with `.venv` active:
 
 ```sh
-python exercises/lab_2_context_retriever/02_context.py
+python exercises/lab_4_context_retriever/04_context.py
 ```
 
 Expect `Stores: 2` and `Orders: 3`, the stored order HASH, the configured surface ID, a full list of generated tools, and a result for `O1001` with status `ready_for_pickup`. Compare the printed HASH fields with the `O1001` JSONL line and the listed get, search, and filter tools with the fields you indexed in Step 1. The Redis client prints byte strings unless you enable response decoding. Each run reloads these five synthetic keys, overwriting any direct Redis changes to their sample fields, and creates another agent key. Remove workshop agent keys in the Cloud console after the session. To see live context, change that fictional order's `status` in `data/orders.jsonl`, rerun the same command, then restore the sample data.
@@ -66,10 +66,10 @@ Expect `Stores: 2` and `Orders: 3`, the stored order HASH, the configured surfac
 
 If configuration fails, first confirm you finished the Cloud UI setup and saved at least one entity with a primary-key field. Then check `CTX_SURFACE_ID` and the admin key's access to that surface. If a tool returns no order, confirm the service's database connection matches `REDIS_URL` and its key patterns match the loaded HASHes. If expected tools are missing, check that the exported model includes both entities and that you completed their fields. The script stops on configuration or tool errors.
 
-For the completed path, use the same `.env` with [`02_context_completed.py`](02_context_completed.py) and run it once:
+For the completed path, use the same `.env` with [`04_context_completed.py`](04_context_completed.py) and run it once:
 
 ```sh
-python exercises/lab_2_context_retriever/02_context_completed.py
+python exercises/lab_4_context_retriever/04_context_completed.py
 ```
 
 Running the unfinished starter model will not expose all completed fields.

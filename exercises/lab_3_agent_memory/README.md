@@ -1,4 +1,4 @@
-# Lab 4: Agent Memory
+# Lab 3: Agent Memory
 
 **Goal:** observe immediate session memory and later long-term recall. Allow about 25 minutes. This lab uses only a fictional pickup preference.
 
@@ -16,7 +16,7 @@ Set `WORKSHOP_USER_ID` in `.env` to a unique non-sensitive ID before running the
 
 ## Exercise
 
-Edit [`04_memory.py`](04_memory.py):
+Edit [`03_agent_memory.py`](03_agent_memory.py):
 
 1. Call `memory.health()` and print its response. A healthy service gives you a useful baseline before interpreting the later results.
 2. In `write` mode, call `add_session_event()` with `session_id=session_id`, `actor_id=user_id`, `role=models.MessageRole.USER`, `content=[models.Text(text="I prefer pickup at demo store S101.")]`, and `created_at=datetime.now(timezone.utc)`.
@@ -24,11 +24,11 @@ Edit [`04_memory.py`](04_memory.py):
 4. Search long-term memory with a question about pickup preference and `filter_` set to `{"owner_id": {"eq": user_id}}`. Use `limit=5` in the request and print the response.
 
 ```sh
-python exercises/lab_4_agent_memory/04_memory.py write
-python exercises/lab_4_agent_memory/04_memory.py read
+python exercises/lab_3_agent_memory/03_agent_memory.py write
+python exercises/lab_3_agent_memory/03_agent_memory.py read
 ```
 
-Run `write` once; repeat `read` after the service extraction cadence. The session event should appear immediately. Long-term memory is extracted asynchronously and can initially be empty or phrased differently. The owner filter scopes this query to your fictional ID. Use no real customer or health information. Compare with [`04_memory_completed.py`](04_memory_completed.py) after your attempt.
+Run `write` once; repeat `read` after the service extraction cadence. The session event should appear immediately. Long-term memory is extracted asynchronously and can initially be empty or phrased differently. The owner filter scopes this query to your fictional ID. Use no real customer or health information. Compare with [`03_memory_completed.py`](03_memory_completed.py) after your attempt.
 
 ## Explain the result
 

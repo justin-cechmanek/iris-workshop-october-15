@@ -1,4 +1,4 @@
-# Lab 3: LangCache
+# Lab 2: LangCache
 
 **Goal:** serve a repeated public policy answer from managed LangCache through RedisVL. Allow about 20 minutes. Read the fictional [`pickup policy`](../../data/policies/pickup.md).
 
@@ -16,7 +16,7 @@ RedisVL's `LangCacheSemanticCache` wraps the managed LangCache API; it does not 
 
 ## Exercise
 
-Edit [`03_langcache.py`](03_langcache.py). Complete the TODOs in order:
+Edit [`o2_langcache.py`](o2_langcache.py). Complete the TODOs in order:
 
 1. Construct RedisVL's `LangCacheSemanticCache` with the service URL, cache ID, and API key.
 2. Call `cache.check(prompt=first, distance_threshold=0.1)` and print the returned list of hit dictionaries. With RedisVL's default normalized distance scale, `0.1` means a minimum LangCache similarity of `0.9`. An empty list is a miss.
@@ -27,14 +27,14 @@ Edit [`03_langcache.py`](03_langcache.py). Complete the TODOs in order:
 ## Run and inspect
 
 ```sh
-python exercises/lab_3_langcache/03_langcache.py
+python exercises/lab_2_langcache/o2_langcache.py
 ```
 
 The repeated exact prompt should hit. The rephrased prompt may miss at `0.02` and hit at a looser threshold, but the actual result depends on the service's similarity score and any entries already in the cache. A loose match may return an irrelevant answer, so read the hit before using it. This lab caches only a stable public policy answer, never a personalized order response.
 
 ## Troubleshooting
 
-If every check has the same result, try another rephrasing and compare again. Compare with [`03_langcache_completed.py`](03_langcache_completed.py) after your attempt.
+If every check has the same result, try another rephrasing and compare again. Compare with [`02_langcache_completed.py`](02_langcache_completed.py) after your attempt.
 
 ## Explain the result
 
