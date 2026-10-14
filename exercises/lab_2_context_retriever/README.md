@@ -15,7 +15,7 @@ The loader gets a Redis connection through RedisVL and writes current data as ra
 Edit [`02_load_context.py`](02_load_context.py). `RedisConnectionFactory` provides the connection; its client still exposes Redis commands. Complete `load_file()` with one `HSET` per JSON line. The key must be `workshop:store:<store_id>` or `workshop:order:<order_id>`, and `mapping=record` must retain all field names. After loading, call `r.hgetall("workshop:order:O1001")` and print the stored HASH. Run:
 
 ```sh
-python exercises/lab_2/02_load_context.py
+python exercises/lab_2_context_retriever/02_load_context.py
 ```
 
 Expect `Stores: 2` and `Orders: 3`. Compare the printed HASH fields with the `O1001` JSONL line. The Redis client prints byte strings unless you enable response decoding. Re-running updates these five synthetic keys.
@@ -32,7 +32,7 @@ Follow the [Context Retriever quickstart](https://redis.io/docs/latest/develop/a
 ctxctl auth login -u YOUR_CLOUD_EMAIL
 ctxctl --output json admin create --name cvs-workshop-admin
 export CTX_ADMIN_KEY='PASTE_ADMIN_KEY'
-ctxctl --output json surface create --name cvs-workshop --description 'Synthetic retail orders' --models exercises/lab_2/models.py --redis-addr YOUR_REDIS_HOST:PORT --redis-password 'YOUR_REDIS_PASSWORD' --admin-key "$CTX_ADMIN_KEY"
+ctxctl --output json surface create --name cvs-workshop --description 'Synthetic retail orders' --models exercises/lab_2_context_retriever/models.py --redis-addr YOUR_REDIS_HOST:PORT --redis-password 'YOUR_REDIS_PASSWORD' --admin-key "$CTX_ADMIN_KEY"
 export CTX_SURFACE_ID='PASTE_SURFACE_ID'
 ctxctl surface describe "$CTX_SURFACE_ID" --admin-key "$CTX_ADMIN_KEY"
 ctxctl --output json agent create --surface-id "$CTX_SURFACE_ID" --name cvs-workshop-agent --admin-key "$CTX_ADMIN_KEY"
@@ -45,12 +45,12 @@ Check that `surface describe` names your two entities before creating the agent 
 Edit [`02_context.py`](02_context.py). Call `UnifiedClient.list_tools(agent_key)` and print **every complete tool definition** as indented JSON. The list shows what Context Retriever generated from both entities and their indexed fields. Find `get_order_by_id` and inspect its `inputSchema`, then call `UnifiedClient.query_tool(agent_key=..., tool_name="get_order_by_id", arguments={"id": "O1001"})`. Print the result. The generated tool schema, not the Redis key pattern, tells you the API argument name.
 
 ```sh
-python exercises/lab_2/02_context.py
+python exercises/lab_2_context_retriever/02_context.py
 ```
 
 Expect a full list of generated tools followed by a result for `O1001` with status `ready_for_pickup`. Compare the listed get, search, and filter tools with the fields you indexed in `models.py`. To see live context, change that fictional order's `status` in `data/orders.jsonl`, rerun the loader, call the tool again, then restore the sample data.
 
-For the completed path, run [`02_load_context_completed.py`](02_load_context_completed.py), create the surface with `--models exercises/lab_2/models_completed.py`, then run [`02_context_completed.py`](02_context_completed.py). Creating a surface from the unfinished starter model will not expose all completed fields.
+For the completed path, run [`02_load_context_completed.py`](02_load_context_completed.py), create the surface with `--models exercises/lab_2_context_retriever/models_completed.py`, then run [`02_context_completed.py`](02_context_completed.py). Creating a surface from the unfinished starter model will not expose all completed fields.
 
 ## Explain the result
 

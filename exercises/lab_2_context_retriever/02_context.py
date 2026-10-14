@@ -1,6 +1,6 @@
 """Lab 2: inspect and call a generated Context Retriever tool.
 
-Run from repository root: python exercises/lab_2/02_context.py
+Run from repository root: python exercises/lab_2_context_retriever/02_context.py
 """
 
 import asyncio

@@ -72,10 +72,10 @@ Work from the repository root, with `.venv` active, in this order:
 
 | Lab | Guide | Main exercise |
 | --- | --- | --- |
-| 1. Vector search | [Lab 1 instructions](exercises/lab_1/README.md) | Parse, embed, index, and search policy documents |
-| 2. Context Retriever | [Lab 2 instructions](exercises/lab_2/README.md) | Load orders and stores, model entities, call a generated tool |
-| 3. LangCache | [Lab 3 instructions](exercises/lab_3/README.md) | Search, store, and compare policy answers |
-| 4. Agent Memory | [Lab 4 instructions](exercises/lab_4/README.md) | Write a session event and search extracted memory |
+| 1. Vector search | [Lab 1 instructions](exercises/lab_1_vector_search/README.md) | Parse, embed, index, and search policy documents |
+| 2. Context Retriever | [Lab 2 instructions](exercises/lab_2_context_retriever/README.md) | Load orders and stores, model entities, call a generated tool |
+| 3. LangCache | [Lab 3 instructions](exercises/lab_3_langcache/README.md) | Search, store, and compare policy answers |
+| 4. Agent Memory | [Lab 4 instructions](exercises/lab_4_agent_memory/README.md) | Write a session event and search extracted memory |
 
 Each starter has a commented `*_completed.py` answer beside it. Try the starter first, then compare. Lab 2 also has `models_completed.py`; create the surface with that model when trying the completed path.
 

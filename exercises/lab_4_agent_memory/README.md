@@ -24,8 +24,8 @@ Edit [`04_memory.py`](04_memory.py):
 4. Search long-term memory with a question about pickup preference and `filter_` set to `{"owner_id": {"eq": user_id}}`. Use `limit=5` in the request and print the response.
 
 ```sh
-python exercises/lab_4/04_memory.py write
-python exercises/lab_4/04_memory.py read
+python exercises/lab_4_agent_memory/04_memory.py write
+python exercises/lab_4_agent_memory/04_memory.py read
 ```
 
 Run `write` once; repeat `read` after the service extraction cadence. The session event should appear immediately. Long-term memory is extracted asynchronously and can initially be empty or phrased differently. The owner filter scopes this query to your fictional ID. Use no real customer or health information. Compare with [`04_memory_completed.py`](04_memory_completed.py) after your attempt.

@@ -1,6 +1,6 @@
 """Completed lab 4: add a fictional session event and search memory.
 
-Run 'python exercises/lab_4/04_memory_completed.py write' once, then use 'read'.
+Run 'python exercises/lab_4_agent_memory/04_memory_completed.py write' once, then use 'read'.
 Long-term extraction is asynchronous and may need another read later.
 """
 

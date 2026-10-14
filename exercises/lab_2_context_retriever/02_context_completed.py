@@ -1,7 +1,7 @@
 """Completed lab 2: inspect generated tools, then fetch one live order.
 
 First create a Context Retriever surface with models_completed.py and put
-CTX_AGENT_KEY in .env. Run: python exercises/lab_2/02_context_completed.py
+CTX_AGENT_KEY in .env. Run: python exercises/lab_2_context_retriever/02_context_completed.py
 """
 
 import asyncio

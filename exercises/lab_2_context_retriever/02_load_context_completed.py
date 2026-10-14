@@ -1,6 +1,6 @@
 """Completed lab 2 loader: copy the synthetic JSONL records into Redis HASHes.
 
-Run from the repository root: python exercises/lab_2/02_load_context_completed.py
+Run from the repository root: python exercises/lab_2_context_retriever/02_load_context_completed.py
 The HASH key pattern matches models_completed.py exactly.
 """
 

@@ -1,6 +1,6 @@
 """Completed lab 2 model: Redis HASH fields exposed as Context Retriever tools.
 
-Use this file with ctxctl --models exercises/lab_2/models_completed.py when trying
+Use this file with ctxctl --models exercises/lab_2_context_retriever/models_completed.py when trying
 the completed scripts. Key templates must match 02_load_context_completed.py.
 """
 

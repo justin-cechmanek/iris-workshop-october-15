@@ -28,7 +28,7 @@ class CompletedExamplesTest(unittest.TestCase):
                 self.records[key] = mapping
 
         load_file = runpy.run_path(
-            str(ROOT / "exercises/lab_2/02_load_context_completed.py"),
+            str(ROOT / "exercises/lab_2_context_retriever/02_load_context_completed.py"),
             run_name="workshop_check",
         )["load_file"]
         fake = FakeRedis()
@@ -38,7 +38,7 @@ class CompletedExamplesTest(unittest.TestCase):
 
     def test_vector_schema_and_key(self):
         module = runpy.run_path(
-            str(ROOT / "exercises/lab_1/01_vector_completed.py"),
+            str(ROOT / "exercises/lab_1_vector_search/01_vector_completed.py"),
             run_name="workshop_check",
         )
         index = SearchIndex.from_dict(module["SCHEMA"], redis_url="redis://localhost:6379")
@@ -65,7 +65,7 @@ class CompletedExamplesTest(unittest.TestCase):
                 return "demo-entry"
 
         module = runpy.run_path(
-            str(ROOT / "exercises/lab_3/03_langcache_completed.py"),
+            str(ROOT / "exercises/lab_3_langcache/03_langcache_completed.py"),
             run_name="workshop_check",
         )
         main = module["main"]

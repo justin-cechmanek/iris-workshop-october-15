@@ -141,18 +141,18 @@ add_text(s, "Agent Memory Quick create can use Free 30 MB. Confirm service acces
 s = new_slide(deck, "Lab 1: vector search", 7,
               "Sources: https://docs.redisvl.com/en/latest/user_guide/04_vectorizers.html ; "
               "https://docs.redisvl.com/en/latest/api/searchindex.html . "
-              "Workshop guide: exercises/lab_1/README.md")
-label(s, "Edit exercises/lab_1/01_vector.py")
+              "Workshop guide: exercises/lab_1_vector_search/README.md")
+label(s, "Edit exercises/lab_1_vector_search/01_vector.py")
 body(s, "Read eight policy Markdown files.\n\n"
         "Embed its body locally with all-MiniLM-L6-v2.\n\n"
         "Create a RedisVL HASH index and load records.\n\n"
         "Inspect the 1,536-byte vector; query top 2.", x=0.65, y=1.8, w=7.25, h=4.95, size=22)
-code(s, "python exercises/lab_1/01_vector.py\n\nExpected: pickup policy near top", 8.1, 2.12, 4.45, 2.6, 17)
+code(s, "python exercises/lab_1_vector_search/01_vector.py\n\nExpected: pickup policy near top", 8.1, 2.12, 4.45, 2.6, 17)
 
 # 8. Lab 2 data/model
 s = new_slide(deck, "Lab 2: data and entity model", 8,
               "Source: https://redis.io/docs/latest/develop/ai/context-engine/context-retriever/quickstart/ . "
-              "Workshop guide: exercises/lab_2/README.md")
+              "Workshop guide: exercises/lab_2_context_retriever/README.md")
 label(s, "Edit the loader and models.py")
 body(s, "Load stores.jsonl and orders.jsonl as HASHes.\n\n"
         "Inspect O1001 with HGETALL.\n\n"
@@ -166,19 +166,19 @@ s = new_slide(deck, "Context Retriever surface and keys", 9,
               "Source: https://redis.io/docs/latest/develop/ai/context-engine/context-retriever/quickstart/")
 label(s, "Cloud sign-in and ctxctl")
 body(s, "Sign in with ctxctl. Create an admin key.\n\n"
-        "Create a surface from exercises/lab_2/models.py and your Redis endpoint.\n\n"
+        "Create a surface from exercises/lab_2_context_retriever/models.py and your Redis endpoint.\n\n"
         "Create an agent key for tool calls.", x=0.65, y=1.85, w=7.0, h=4.6, size=22)
 code(s, "ctxctl auth login -u EMAIL\n"
         "ctxctl admin create --name cvs-workshop-admin\n"
-        "ctxctl surface create --models exercises/lab_2/models.py ...\n"
+        "ctxctl surface create --models exercises/lab_2_context_retriever/models.py ...\n"
         "ctxctl agent create --surface-id ID ...", 7.9, 2.0, 4.7, 3.55, 15)
 add_text(s, "Admin key manages the surface. Agent key invokes generated tools.", 0.65, 6.08, 11.7, 0.65, 18, MUTED)
 
 # 10. Lab 2 tool call
 s = new_slide(deck, "Lab 2: generated order tool", 10,
               "Source: https://redis.io/tutorials/getting-started-with-redis-iris/ . "
-              "Workshop guide: exercises/lab_2/README.md")
-label(s, "Edit exercises/lab_2/02_context.py")
+              "Workshop guide: exercises/lab_2_context_retriever/README.md")
+label(s, "Edit exercises/lab_2_context_retriever/02_context.py")
 body(s, "Print every generated tool with the agent key.\n\n"
         "Inspect get_order_by_id and its input schema.\n\n"
         "Call it with id = O1001.\n\n"
@@ -194,7 +194,7 @@ s = new_slide(deck, "Lab 3: LangCache", 11,
               "Sources: https://redis.io/docs/latest/operate/rc/langcache/create-service/ ; "
               "https://redis.io/docs/latest/operate/rc/langcache/use-langcache/ ; "
               "https://docs.redisvl.com/en/latest/user_guide/13_langcache_semantic_cache.html . "
-              "Workshop guide: exercises/lab_3/README.md")
+              "Workshop guide: exercises/lab_3_langcache/README.md")
 label(s, "Create service in Redis Cloud")
 body(s, "Open LangCache and create a service on the workshop database.\n\n"
         "Copy the API key once. Get the base URL and cache ID from Connectivity.\n\n"
@@ -209,14 +209,14 @@ code(s, "for limit in (0.02, 0.10, 0.40):\n"
 # 12. Lab 4
 s = new_slide(deck, "Lab 4: Agent Memory", 12,
               "Source: https://redis.io/docs/latest/develop/ai/context-engine/agent-memory/python-sdk-quickstart/ . "
-              "Workshop guide: exercises/lab_4/README.md")
+              "Workshop guide: exercises/lab_4_agent_memory/README.md")
 label(s, "Create an Agent Memory service")
 body(s, "Use Quick create on Free, or set a 1-minute cadence in a custom service.\n\n"
         "Copy its API key, endpoint, and store ID. Set a unique WORKSHOP_USER_ID.\n\n"
         "Check service health, write one fictional event, then compare session and long-term memory.",
         x=0.65, y=1.8, w=8.0, h=4.7, size=21)
-code(s, "python exercises/lab_4/04_memory.py write\n\n"
-        "python exercises/lab_4/04_memory.py read", 7.85, 2.2, 4.85, 2.9, 15)
+code(s, "python exercises/lab_4_agent_memory/04_memory.py write\n\n"
+        "python exercises/lab_4_agent_memory/04_memory.py read", 7.85, 2.2, 4.85, 2.9, 15)
 add_text(s, "The session appears immediately. Long-term extraction runs later.",
          0.65, 6.12, 11.8, 0.65, 18, MUTED)
 

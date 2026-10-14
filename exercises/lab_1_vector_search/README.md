@@ -26,7 +26,7 @@ RedisVL's [index reference](https://docs.redisvl.com/en/latest/api/searchindex.h
 ## Run and inspect
 
 ```sh
-python exercises/lab_1/01_vector.py
+python exercises/lab_1_vector_search/01_vector.py
 ```
 
 Expect `Redis: True`, eight loaded keys, `Pickup embedding bytes: 1536`, and the pickup policy near the top. Then try “When will a delivered order arrive?” and “Can I add a coupon after checkout?” Compare the top two results and read their bodies before answering. Smaller cosine distance means a closer match. Re-running updates the same eight HASHes; the local model still computes embeddings again but makes no embedding API calls.

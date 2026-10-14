@@ -1,6 +1,6 @@
 """Lab 1: embed policy Markdown locally and search it with RedisVL.
 
-Run from the repository root: python exercises/lab_1/01_vector.py
+Run from the repository root: python exercises/lab_1_vector_search/01_vector.py
 Fill the TODOs using this lab's README.md. Do not delete existing indexes.
 """
 

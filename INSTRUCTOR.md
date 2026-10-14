@@ -11,16 +11,16 @@ Complete this before attendees arrive. The [attendee schedule](README.md#150-min
 After setting the demo credentials, use this order for the live preflight:
 
 ```sh
-python exercises/lab_1/01_vector_completed.py
-python exercises/lab_2/02_load_context_completed.py
+python exercises/lab_1_vector_search/01_vector_completed.py
+python exercises/lab_2_context_retriever/02_load_context_completed.py
 # Create the Context Retriever surface from models_completed.py here.
-python exercises/lab_2/02_context_completed.py
-python exercises/lab_3/03_langcache_completed.py
-python exercises/lab_4/04_memory_completed.py write
-python exercises/lab_4/04_memory_completed.py read
+python exercises/lab_2_context_retriever/02_context_completed.py
+python exercises/lab_3_langcache/03_langcache_completed.py
+python exercises/lab_4_agent_memory/04_memory_completed.py write
+python exercises/lab_4_agent_memory/04_memory_completed.py read
 ```
 
-The [lab 2 guide](exercises/lab_2/README.md) shows the surface creation commands; substitute `models_completed.py` for `models.py`. Repeat only the Memory `read` command after the extraction cadence.
+The [lab 2 guide](exercises/lab_2_context_retriever/README.md) shows the surface creation commands; substitute `models_completed.py` for `models.py`. Repeat only the Memory `read` command after the extraction cadence.
 
 During each lab, ask attendees to predict what Redis will store or return before they run code. After the terminal result, ask them to explain it using the key, index, model, cache entry, or memory event they just created. The questions are in each lab guide.
 

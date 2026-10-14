@@ -1,7 +1,7 @@
 """Lab 4: write a fictional preference, then read session and long-term memory.
 
-Run: python exercises/lab_4/04_memory.py write
-Then: python exercises/lab_4/04_memory.py read
+Run: python exercises/lab_4_agent_memory/04_memory.py write
+Then: python exercises/lab_4_agent_memory/04_memory.py read
 """
 
 import os

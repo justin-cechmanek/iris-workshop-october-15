@@ -1,6 +1,6 @@
 """Completed lab 1: embed local policy text and search it with RedisVL.
 
-Run from the repository root: python exercises/lab_1/01_vector_completed.py
+Run from the repository root: python exercises/lab_1_vector_search/01_vector_completed.py
 The Hugging Face model downloads on first use; later runs use its local cache.
 """
 

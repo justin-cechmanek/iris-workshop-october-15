@@ -1,6 +1,6 @@
 """Completed lab 3: use RedisVL with managed LangCache for a public answer.
 
-Run from the repository root: python exercises/lab_3/03_langcache_completed.py
+Run from the repository root: python exercises/lab_3_langcache/03_langcache_completed.py
 Only fictional, non-personalized policy text is stored.
 """
 

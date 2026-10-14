@@ -1,6 +1,6 @@
 """Lab 2: load synthetic order/store HASH data for Context Retriever.
 
-Run from repository root: python exercises/lab_2/02_load_context.py
+Run from repository root: python exercises/lab_2_context_retriever/02_load_context.py
 """
 
 import json

@@ -21,7 +21,7 @@ Edit [`03_langcache.py`](03_langcache.py):
 5. Check the **same rephrased prompt** three times with `distance_threshold` values `0.02`, `0.10`, and `0.40`. For each check, print the threshold, `HIT` or `MISS`, and the returned hit list. With RedisVL's normalized distance scale, these correspond to minimum similarities of `0.98`, `0.90`, and `0.60`. Do not store the rephrased prompt between checks; that would create an exact match and hide the threshold effect. The [RedisVL LangCache guide](https://docs.redisvl.com/en/latest/user_guide/13_langcache_semantic_cache.html) shows this `check`/`store` workflow.
 
 ```sh
-python exercises/lab_3/03_langcache.py
+python exercises/lab_3_langcache/03_langcache.py
 ```
 
 The repeated exact prompt should hit. The rephrased prompt may miss at `0.02` and hit at a looser threshold, but the actual result depends on the service's similarity score and any entries already in the cache. If every check has the same result, try another rephrasing and compare again. A loose match may return an irrelevant answer, so read the hit before using it. This lab caches only a stable public policy answer, never a personalized order response. Compare with [`03_langcache_completed.py`](03_langcache_completed.py) after your attempt.
