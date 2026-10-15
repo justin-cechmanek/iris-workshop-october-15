@@ -1,10 +1,9 @@
 """Completed lab 4: model, load, and retrieve live orders in one file.
 
-First finish Cloud UI setup with at least one saved entity (see README.md).
-Use Store, key template workshop:store:{store_id}, and store_id as its PK.
-Save REDIS_URL, CTX_ADMIN_KEY, and the created service's CTX_SURFACE_ID
-in .env. This script loads data, replaces the initial UI entity model with
-Store and Order, creates an agent key, and retrieves an order.
+Save REDIS_URL and CTX_ADMIN_KEY in .env (see README.md).
+This script loads data, creates a service with Store and Order, saves its
+CTX_SURFACE_ID in .env for reuse, creates an agent key, and retrieves an order.
+If CTX_SURFACE_ID is already set, it updates that service's model instead.
 Then run once from the repository root:
     python exercises/lab_4_context_retriever/04_context_completed.py
 """
@@ -17,11 +16,15 @@ from pathlib import Path
 from context_surfaces import (
     ContextSurfacesClient,
     CreateAgentKeyRequest,
+    CreateContextSurfaceRequest,
+    DataSourceConnectionConfig,
+    DataSourceRequest,
     UnifiedClient,
     UpdateContextSurfaceRequest,
 )
 from context_surfaces.context_model import ContextField, ContextModel, export_data_model
-from dotenv import load_dotenv
+from dotenv import load_dotenv, set_key
+from redis.connection import parse_url
 from redisvl.redis.connection import RedisConnectionFactory
 
 
@@ -75,22 +78,63 @@ def load_context():
     print("Stored order O1001:", order_hash)
 
 
-# Step 3: configure the existing surface and create an agent key.
-# Finish the initial entity setup in the Cloud UI before running this step.
+# Step 3: create or update the surface and create an agent key.
 async def configure_context():
     admin_key = os.environ["CTX_ADMIN_KEY"]
-    surface_id = os.environ["CTX_SURFACE_ID"]
+    surface_id = os.environ.get("CTX_SURFACE_ID", "").strip()
     data_model = export_data_model(
         title="CVS workshop",
         description="Synthetic retail orders",
         entities=[Store, Order],
     )
     async with ContextSurfacesClient() as client:
-        await client.update_context_surface(
-            surface_id,
-            UpdateContextSurfaceRequest(data_model=data_model),
-            admin_key=admin_key,
-        )
+        if surface_id:
+            await client.update_context_surface(
+                surface_id,
+                UpdateContextSurfaceRequest(data_model=data_model),
+                admin_key=admin_key,
+            )
+        else:
+            redis_url = os.environ["REDIS_URL"]
+            if not redis_url.startswith(("redis://", "rediss://")):
+                raise ValueError("REDIS_URL must use redis:// or rediss:// for Context Retriever")
+            connection = parse_url(redis_url)
+            if not connection.get("host"):
+                raise ValueError("REDIS_URL must include a Redis host")
+            host = connection["host"]
+            address = f"[{host}]" if ":" in host else host
+            data_source = DataSourceRequest(
+                connection_config=DataSourceConnectionConfig(
+                    addr=f"{address}:{connection.get('port', 6379)}",
+                    username=connection.get("username", ""),
+                    password=connection.get("password", ""),
+                    db=connection.get("db", 0),
+                    tls_enabled=redis_url.startswith("rediss://"),
+                ),
+            )
+            surface = await client.create_context_surface(
+                CreateContextSurfaceRequest(
+                    name="cvs-workshop",
+                    description="Synthetic retail orders",
+                    data_model=data_model,
+                    data_source=data_source,
+                ),
+                admin_key=admin_key,
+            )
+            surface_id = surface.id
+            # Print before saving so a failed local write does not lose the ID.
+            print("Created surface:", surface_id)
+            env_path = Path(__file__).resolve().parents[2] / ".env"
+            try:
+                if not set_key(env_path, "CTX_SURFACE_ID", surface_id)[0]:
+                    raise OSError("Could not save CTX_SURFACE_ID")
+            except (OSError, UnicodeError) as error:
+                raise RuntimeError(
+                    f"Service created, but could not save its ID to {env_path}. "
+                    f"Set CTX_SURFACE_ID={surface_id} there before rerunning."
+                ) from error
+            os.environ["CTX_SURFACE_ID"] = surface_id
+            print("Saved CTX_SURFACE_ID in:", env_path)
         print("Configured surface:", surface_id)
         # Each run creates a new agent key, which stays in memory for tool calls.
         agent = await client.create_agent_key(
@@ -135,7 +179,7 @@ async def query_context(agent_key):
 
 async def main():
     load_dotenv(Path(__file__).resolve().parents[2] / ".env", override=True)
-    for name in ("REDIS_URL", "CTX_ADMIN_KEY", "CTX_SURFACE_ID"):
+    for name in ("REDIS_URL", "CTX_ADMIN_KEY"):
         if not os.environ.get(name):
             raise ValueError(f"Set {name} in .env before running lab 4")
     load_context()
