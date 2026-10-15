@@ -1,11 +1,10 @@
 """Lab 4: model, load, and retrieve live orders in one file.
 
-Complete the TODOs from top to bottom. Save REDIS_URL and CTX_ADMIN_KEY
-in .env. In Redis Cloud, open Context Retriever > Admin keys > New admin key,
-name it cvs-workshop-admin, and generate/copy the key before closing the dialog.
-If Admin keys is unavailable, see README.md for the CLI login/key setup.
-Leave CTX_SURFACE_ID blank: Python creates the service, entities, and fields,
-then saves the ID in .env. Later runs update that service's model.
+First complete Redis Cloud web-console setup using the workshop slides linked
+in README.md. Save REDIS_URL, CTX_ADMIN_KEY, and the UI-created service's
+CTX_SURFACE_ID in .env. Keep the surface ID set before running Python.
+Complete the TODOs from top to bottom. Python updates that service with the
+complete Store and Order models, creates an agent key, and retrieves an order.
 Then run once from the repository root:
     python exercises/lab_4_context_retriever/04_context.py
 """
@@ -86,7 +85,7 @@ async def configure_context():
     raise NotImplementedError("Export the data model")
     async with ContextSurfacesClient() as client:
         if surface_id:
-            # TODO 6 (reuse): await client.update_context_surface(surface_id,
+            # TODO 6 (workshop): await client.update_context_surface(surface_id,
             # UpdateContextSurfaceRequest(data_model=data_model), admin_key=admin_key).
             raise NotImplementedError("Update the existing surface")
         else:
@@ -107,7 +106,7 @@ async def configure_context():
                     tls_enabled=redis_url.startswith("rediss://"),
                 ),
             )
-            # TODO 6 (create): assign surface = await client.create_context_surface(
+            # Optional outside the workshop: assign surface = await client.create_context_surface(
             # CreateContextSurfaceRequest(name="cvs-workshop",
             # description="Synthetic retail orders", data_model=data_model,
             # data_source=data_source), admin_key=admin_key).

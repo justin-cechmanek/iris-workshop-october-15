@@ -1,9 +1,10 @@
 """Completed lab 4: model, load, and retrieve live orders in one file.
 
-Save REDIS_URL and CTX_ADMIN_KEY in .env (see README.md).
-This script loads data, creates a service with Store and Order, saves its
-CTX_SURFACE_ID in .env for reuse, creates an agent key, and retrieves an order.
-If CTX_SURFACE_ID is already set, it updates that service's model instead.
+First complete Redis Cloud web-console setup using the workshop slides linked
+in README.md. Save REDIS_URL, CTX_ADMIN_KEY, and the UI-created service's
+CTX_SURFACE_ID in .env. Keep the surface ID set before running Python.
+This script loads data, updates that service with Store and Order,
+creates an agent key, and retrieves an order.
 Then run once from the repository root:
     python exercises/lab_4_context_retriever/04_context_completed.py
 """
