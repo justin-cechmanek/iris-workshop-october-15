@@ -25,6 +25,7 @@ def main():
         "The user prefers pickup at demo store S101.",
         "The user prefers email notifications for pickup orders.",
     ]
+
     conversation = [{"role": "USER", "content": "I collect pickup orders after work."},
                     {"role": "AGENT", "content": "I'll remember that you collect orders after work."},
                     {"role": "USER", "content": "Weekday evenings are usually best for me."},
