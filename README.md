@@ -77,7 +77,7 @@ Work from the repository root, with `.venv` active, in this order:
 | 3. Agent Memory | [Lab 3 instructions](exercises/lab_3_agent_memory/README.md) | Write a session event and search extracted memory |
 | 4. Context Retriever | [Lab 4 instructions](exercises/lab_4_context_retriever/README.md) | Model entities, load orders and stores, call a generated tool |
 
-Each starter has a commented `*_completed.py` answer beside it. Try the starter first, then compare. Lab 4 keeps its models, loader, surface configuration, and tool calls in one file; after creating an initial entity in the Cloud UI, both versions configure the complete workshop model through Python.
+Each starter has a commented `*_completed.py` answer beside it. Try the starter first, then compare. Lab 4 keeps its models, loader, surface configuration, and tool calls in one file. After you obtain an admin key, Python creates the service with its entities and fields and saves `CTX_SURFACE_ID` in `.env` for reuse. See the lab guide for admin-key setup and console inspection.
 
 RedisVL defines, loads, and queries the vector index in lab 1, supplies the Redis connection for lab 4's raw HASH writes, and wraps the managed LangCache service in lab 2. Context Retriever models those HASHes as a separate service; lab 3 uses the Agent Memory SDK.
 
