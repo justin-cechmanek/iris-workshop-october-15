@@ -29,7 +29,14 @@ from redisvl.redis.connection import RedisConnectionFactory
 
 
 # Step 1: model the entities, keeping key templates aligned with the loader.
-class Store(ContextModel):
+class HashContextModel(ContextModel):
+    # shortcut: SDK 0.0.6 omits document_type; use native HASH declarations after upgrading.
+    @classmethod
+    def to_entity_dict(cls):
+        return {**super().to_entity_dict(), "document_type": "hash"}
+
+
+class Store(HashContextModel):
     __redis_key_template__ = "workshop:store:{store_id}"
 
     # A key component identifies one HASH; text fields support word search,
@@ -40,7 +47,7 @@ class Store(ContextModel):
     pickup_status: str = ContextField(description="Whether pickup is open", index="tag")
 
 
-class Order(ContextModel):
+class Order(HashContextModel):
     __redis_key_template__ = "workshop:order:{order_id}"
 
     order_id: str = ContextField(description="Demo retail order ID", is_key_component=True)
@@ -62,15 +69,15 @@ def load_file(redis_client, file, prefix, id_field):
         key = f"{prefix}:{record[id_field]}"
         redis_client.hset(key, mapping=record)
         count += 1
-        print("Loaded:", key)
     return count
 
 
 def load_context():
+    data_dir = Path(__file__).resolve().parents[2] / "data"
     redis_client = RedisConnectionFactory.get_redis_connection(redis_url=os.environ["REDIS_URL"])
     print("Redis:", redis_client.ping())
-    print("Stores:", load_file(redis_client, "data/stores.jsonl", "workshop:store", "store_id"))
-    print("Orders:", load_file(redis_client, "data/orders.jsonl", "workshop:order", "order_id"))
+    print("Stores:", load_file(redis_client, data_dir / "stores.jsonl", "workshop:store", "store_id"))
+    print("Orders:", load_file(redis_client, data_dir / "orders.jsonl", "workshop:order", "order_id"))
     # Inspect a raw HASH before Context Retriever turns it into a tool result.
     # RedisVL's connection is a redis-py client. With default settings,
     # hgetall() returns bytes for each field and value.
@@ -148,21 +155,22 @@ async def configure_context():
 # Step 4: inspect the generated tools and retrieve order O1001.
 async def query_context(agent_key):
     async with UnifiedClient() as client:
-        # Print every complete definition generated from Store and Order,
-        # including fields beyond inputSchema.
+        # Summarize the tools; inspect only the schema used by this lab.
         tools = await client.list_tools(agent_key)
         tool_details = [
             tool if isinstance(tool, dict) else tool.model_dump(by_alias=True)
             for tool in tools
         ]
-        print(f"Generated tools ({len(tool_details)}):")
-        for details in tool_details:
-            print(json.dumps(details, indent=2))
+        tools_by_name = {details["name"]: details for details in tool_details}
+        print(f"Generated tools ({len(tools_by_name)}):", ", ".join(tools_by_name))
 
         tool_name = "get_order_by_id"
-        names = {details["name"] for details in tool_details}
-        if tool_name not in names:
+        if tool_name not in tools_by_name:
             raise RuntimeError(f"{tool_name} was not generated; check the surface model")
+        print(json.dumps({
+            "name": tool_name,
+            "inputSchema": tools_by_name[tool_name]["inputSchema"],
+        }, indent=2))
 
         # A primary key produces get_<entity>_by_id with an 'id' argument.
         # This call uses the agent key, not the admin key or a raw Redis query.
